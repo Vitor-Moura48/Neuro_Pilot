@@ -1,12 +1,17 @@
-from config.configuracoes import pygame, plano_de_fundo, tela, fps, clock
+from config.configuracoes import pygame, plano_de_fundo, tela, fps, clock, choice
 from recursos import dados
 from src.jogo import inimigos
 
 def atualizar_objetos():
 
-    if dados.quantidade_mobs < 3 and dados.mobs_restantes > 0:
-        mob = inimigos.Inimigo1()
-        dados.sprites_inimigas.add(mob)
+    if dados.mobs_restantes <= 0: # quando esse contador acabar o cenári odeve mudar para o boss
+        pass
+
+    if dados.quantidade_mobs < 3:
+        try:
+            mob = choice([inimigos.Inimigo1(), inimigos.Inimigo2()])
+            dados.sprites_inimigas.add(mob)
+        except: pass
    
     # adiconar objetos sprites na tela
     dados.sprites.draw(tela)
