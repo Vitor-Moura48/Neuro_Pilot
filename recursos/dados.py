@@ -8,3 +8,5 @@ sprites_projeteis_inimigos = pygame.sprite.Group()
 
 quantidade_mobs = 0
 mobs_restantes = 30
+
+cenario = 0

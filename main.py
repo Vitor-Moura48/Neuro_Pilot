@@ -1,4 +1,4 @@
-from config.configuracoes import pygame, plano_de_fundo, tela, fps, clock, choice
+from config.configuracoes import pygame, plano_de_fundo, plano_de_fundo2, tela, fps, clock, choice
 from recursos import dados
 from src.jogo import inimigos
 
@@ -48,11 +48,14 @@ def responder_a_eventos():
             for agente in dados.sprites_agentes:
                     agente.disparar()
 
-
 pygame.init()
 while True: # loop principal
 
-    tela.blit(plano_de_fundo, (0, 0)) # plano de fundo da tela
+    dados.cenario += 1.5 if dados.cenario < 1000 else 0
+
+    tela.fill((000, 000, 000))
+    tela.blit(plano_de_fundo, (0, dados.cenario)) # plano de fundo da tela
+    tela.blit(plano_de_fundo2, (0, dados.cenario - 1000))
 
     atualizar_objetos()
 
