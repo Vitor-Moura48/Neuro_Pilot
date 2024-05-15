@@ -11,6 +11,7 @@ A arquitetura da rede neural pode ser personalizada de várias maneiras para exp
 - Indivíduos: Especifique a quantidade de indivíduos para entender como diferentes tamanhos de populações afetam o aprendizado.
 - Partidas por Geração: Cada indivíduo pode jogar múltiplas partidas, reduzindo o impacto do acaso e fornecendo resultados mais confiáveis.
 - Camada de Entrada: Escolha as entradas que você julga necessárias na camada de entrada para ajustar a complexidade da adaptação da rede neural.
+- Funções de ativação: Escolha a função de ativação que será aplicada em cada camada da rede neural.
 - Elitismo: Defina quantas cópias do melhor indivíduo serão feitas, com leves mutações, visando possíveis variações vantajosas.
 
 ## Funcionamento do algoritmo
@@ -19,11 +20,9 @@ Para otimizar o desempenho da rede neural, foi empregado um algoritmo genético,
 ## Como Executar
 - Pré-requisitos:
   - Certifique-se de ter o Python instalado em seu computador. Você pode baixá-lo em python.org.
-  
-- Baixando o repositório:
-  - Clone este repositório com o comando "git clone https://github.com/Vitor-Moura48/Neuro_Pilot.git".
     
 - Executando o projeto:
+  - Clone este repositório com o comando "git clone https://github.com/Vitor-Moura48/Neuro_Pilot.git".
   - Instale as bibliotecas executando "pip install -r requirements.txt" em seu terminal ou prompt de comando.
   - Abra o terminal ou prompt de comando e navegue até o diretório onde você extraiu/clonou o jogo.
   - Execute o arquivo principal do projeto digitando python main.py no seu terminal, ou simplesmente execute na sua IDE preferida.
