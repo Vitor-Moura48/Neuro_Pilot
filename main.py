@@ -2,6 +2,7 @@ from config.configuracoes import pygame, plano_de_fundo, plano_de_fundo2, tela, 
 from recursos import dados
 from src.jogo import inimigos
 
+
 def atualizar_objetos():
 
     if dados.mobs_restantes <= 0: # quando esse contador acabar o cenári odeve mudar para o boss
@@ -65,3 +66,4 @@ while True: # loop principal
 
     pygame.display.flip()  # atualizar a tela
     clock.tick(fps)
+
