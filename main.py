@@ -49,10 +49,9 @@ def responder_a_eventos():
             for agente in dados.sprites_agentes:
                     agente.disparar()
 
-pygame.init()
 while True: # loop principal
 
-    dados.cenario += 1.5 if dados.cenario < 1000 else 0
+    dados.cenario = (dados.cenario + 1.5) if dados.cenario < 1000 else 0
 
     tela.fill((000, 000, 000))
     tela.blit(plano_de_fundo, (0, dados.cenario)) # plano de fundo da tela
