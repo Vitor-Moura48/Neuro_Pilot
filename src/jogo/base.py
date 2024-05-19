@@ -7,9 +7,9 @@ class Mob(pygame.sprite.Sprite):
         dados.sprites.add(self)
 
         self.sprite = pygame.image.load(os.path.join(caminho)).convert_alpha()
-    
+
         self.sprites = [ self.sprite.subsurface((coluna *  dimensoes[0], linha * dimensoes[1]), (dimensoes[0], dimensoes[1])) for linha in range(linhas_colunas[0]) for coluna in range(linhas_colunas[1]) ]
-        self.sprites = [pygame.transform.scale(imagem, escala) if escala != None else self.image for imagem in self.sprites]
+        self.sprites = [pygame.transform.scale(imagem, escala) for imagem in self.sprites] if escala != None else self.sprites
         self.sprite_index = 0
 
         self.image = self.sprites[self.sprite_index]

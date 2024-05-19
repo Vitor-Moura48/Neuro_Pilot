@@ -1,6 +1,6 @@
 from config.configuracoes import pygame, plano_de_fundo, plano_de_fundo2, tela, fps, clock, choice
 from recursos import dados
-from src.jogo import inimigos
+from src.jogo import inimigos, player
 
 
 def atualizar_objetos():
@@ -48,6 +48,9 @@ def responder_a_eventos():
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             for agente in dados.sprites_agentes:
                     agente.disparar()
+
+try: player.jogador = player.Player(2, 1)
+except: pass
 
 while True: # loop principal
 
