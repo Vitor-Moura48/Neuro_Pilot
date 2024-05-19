@@ -1,7 +1,7 @@
 import json, numpy, os, time, copy
 
 class GerenciadorNeural:
-    def __init__(self, numero_players, partidas_por_geracao, elitismo, classe, *arg):
+    def __init__(self, numero_players, partidas_por_geracao, elitismo, classe, arg=()):
         
         self.numero_players = numero_players
         self.partidas_por_geracao = partidas_por_geracao

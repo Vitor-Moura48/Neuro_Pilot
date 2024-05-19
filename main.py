@@ -1,6 +1,7 @@
 from config.configuracoes import pygame, plano_de_fundo, plano_de_fundo2, tela, fps, clock, choice
 from recursos import dados
 from src.jogo import inimigos, player
+from src.rede_neural import estrategia_evolutiva
 
 
 def atualizar_objetos():
@@ -51,6 +52,9 @@ def responder_a_eventos():
 
 try: player.jogador = player.Player(2, 1)
 except: pass
+
+gerenciador = estrategia_evolutiva.GerenciadorNeural(100, 1, 0.5, player.Player, (2, 1))
+gerenciador.nova_partida()
 
 while True: # loop principal
 
