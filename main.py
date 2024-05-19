@@ -9,12 +9,10 @@ def atualizar_objetos():
     if dados.mobs_restantes <= 0: # quando esse contador acabar o cenári odeve mudar para o boss
         pass
 
-    if dados.quantidade_mobs < 3:
-        try:
-            mob = choice([inimigos.Inimigo1(), inimigos.Inimigo2()])
-            dados.sprites_inimigas.add(mob)
-        except: pass
-   
+    if len(dados.sprites_inimigas) < 3:
+        mob = choice([inimigos.Inimigo1(2, 1), inimigos.Inimigo2(2, 1)])
+        dados.sprites_inimigas.add(mob)
+
     # adiconar objetos sprites na tela
     dados.sprites.draw(tela)
     dados.sprites.update()
@@ -69,6 +67,7 @@ while True: # loop principal
     colisao()
 
     responder_a_eventos()
+    player.controle.mover()
 
     pygame.display.flip()  # atualizar a tela
     clock.tick(fps)
