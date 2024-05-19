@@ -17,6 +17,12 @@ def atualizar_objetos():
     dados.sprites.draw(tela)
     dados.sprites.update()
 
+def finalizar_partida():
+    inimigos.grupo_inimigos = []
+    for sprite in dados.sprites:
+        sprite.kill()
+    estrategia_evolutiva.gerenciador.nova_partida()
+
 def responder_a_eventos():
     
     for event in pygame.event.get(): # responder a eventos
@@ -29,12 +35,15 @@ def responder_a_eventos():
             for agente in dados.sprites_agentes:
                     agente.disparar()
 
-estrategia_evolutiva.gerenciador = estrategia_evolutiva.GerenciadorNeural(100, 1, 0.5, player.Player, (2, 1))
+estrategia_evolutiva.gerenciador = estrategia_evolutiva.GerenciadorNeural(200, 1, 0.5, player.Player, (2, 1))
 estrategia_evolutiva.gerenciador.nova_partida()
 colisoes.colisao = colisoes.Colisoes()
-player.jogador = player.Player(2, 1)
+player.jogador = player.Player(2, 1, real=True)
 
 while True: # loop principal
+
+    if len(estrategia_evolutiva.gerenciador.agentes) == 0:
+        finalizar_partida()
 
     dados.cenario = (dados.cenario + 1.5) if dados.cenario < 1000 else 0
 

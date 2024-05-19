@@ -10,9 +10,10 @@ class Colisoes:
     def verificar_colisao(self, objeto):
         if pygame.sprite.spritecollideany(objeto, dados.sprites_inimigas):
             estrategia_evolutiva.gerenciador.desativar_agente(objeto)
+            objeto.kill()
     
     def verificar_saida(self, objeto):
-        if objeto.rect.bottom < 0 or objeto.rect.top > dados.dimensoes_janela[1] or objeto.rect.left < 0 or objeto.rect.right > dados.dimensoes_janela[0]:
+        if objeto.rect.top > dados.dimensoes_janela[1] or objeto.rect.right < 0 or objeto.rect.left > dados.dimensoes_janela[0]:
             objeto.kill()
             
     # função para chamar as funções de colisão a cada iteração
