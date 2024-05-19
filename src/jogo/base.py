@@ -43,8 +43,8 @@ class Mob(pygame.sprite.Sprite):
     
     def randomizar(self):
         self.rect = self.image.get_rect()
-        self.rect.x = randint(dados.dimensoes_janela[0], dados.dimensoes_janela[0] + self.random_x)
-        self.rect.y = randint(int(dados.dimensoes_janela[1] * 0.1), int(dados.dimensoes_janela[1] - self.rect.size[1]))
+        self.rect.x = randint(0, dados.dimensoes_janela[0] - self.rect.width)
+        self.rect.bottom = randint(-200, 0)
     
     def mover(self):
         if abs(self.velocidade_x) >= 1:

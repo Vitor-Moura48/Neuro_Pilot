@@ -1,14 +1,32 @@
 from .base import Mob
 from config.configuracoes import randint, pygame
 from pygame import *
+from recursos import dados
+from ..rede_neural.rede_neural import RedeNeural
 
 class Player(Mob):
-   def __init__(self, vida, dano):
+    def __init__(self, vida, dano):
         Mob.__init__(self, 'recursos/imagens/sprite1.png', (1, 1), (70, 60), (0, 0), vida, dano)
+
+        self.rede_neural = RedeNeural([2, 6, 6, 4], ['relu', 'relu', 'relu'], 0, 0.05)
+        self.recompensa = 0
 
         self.rect.centerx = randint(100, 500)
         self.rect.centery = randint(500, 600)
+
         self.velocidade = 4
+
+    def update(self):
+        self.recompensa += 1
+
+        if self.rect.left < 0:
+            self.rect.left = 0
+        if self.rect.right > dados.dimensoes_janela[0]:
+            self.rect.right = dados.dimensoes_janela[0]
+        if self.rect.top < 0:
+            self.rect.top = 0
+        if self.rect.bottom > dados.dimensoes_janela[1]:
+            self.rect.bottom = dados.dimensoes_janela[1]
 
 class Controle:  # criar classe para resolver coisas sobre controle
     def __init__(self):

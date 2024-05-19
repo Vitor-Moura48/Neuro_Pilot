@@ -1,6 +1,6 @@
 from config.configuracoes import pygame, plano_de_fundo, plano_de_fundo2, tela, fps, clock, choice
 from recursos import dados
-from src.jogo import inimigos, player
+from src.jogo import inimigos, player, colisoes
 from src.rede_neural import estrategia_evolutiva
 
 
@@ -17,25 +17,6 @@ def atualizar_objetos():
     dados.sprites.draw(tela)
     dados.sprites.update()
 
-def colisao():
-
-    for agente in dados.sprites_agentes:
-
-        for inimigo in dados.sprites_inimigas:
-            if pygame.sprite.collide_rect(agente, inimigo):        
-                agente.receber_dano(inimigo.dano)
-    
-        for projetil_inimigo in dados.sprites_projeteis_inimigos:
-            if pygame.sprite.collide_rect(agente, projetil_inimigo):
-                agente.receber_dano(inimigo.dano)
-
-        
-    for projetil_aliado in dados.sprites_projeteis_aliados:
-
-        for inimigo in dados.sprites_inimigas:
-            if pygame.sprite.collide_rect(projetil_aliado, inimigo):
-                inimigo.receber_dano(projetil_aliado.dano)
-
 def responder_a_eventos():
     
     for event in pygame.event.get(): # responder a eventos
@@ -48,11 +29,10 @@ def responder_a_eventos():
             for agente in dados.sprites_agentes:
                     agente.disparar()
 
-try: player.jogador = player.Player(2, 1)
-except: pass
-
-gerenciador = estrategia_evolutiva.GerenciadorNeural(100, 1, 0.5, player.Player, (2, 1))
-gerenciador.nova_partida()
+estrategia_evolutiva.gerenciador = estrategia_evolutiva.GerenciadorNeural(100, 1, 0.5, player.Player, (2, 1))
+estrategia_evolutiva.gerenciador.nova_partida()
+colisoes.colisao = colisoes.Colisoes()
+player.jogador = player.Player(2, 1)
 
 while True: # loop principal
 
@@ -64,9 +44,10 @@ while True: # loop principal
 
     atualizar_objetos()
 
-    colisao()
+    colisoes.colisao.update()
 
     responder_a_eventos()
+
     player.controle.mover()
 
     pygame.display.flip()  # atualizar a tela

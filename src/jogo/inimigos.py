@@ -6,8 +6,8 @@ class Inimigo1(Mob):
     def __init__(self, vida, dano):
         Mob.__init__(self, 'recursos/imagens/sprite3.png', (1,1), (232, 171), (0, 0), vida, dano, escala=(60, 60))
 
-        self.rect.centerx = randint(100, 500)
-        self.rect.centery = randint(100, 300)
+        self.randomizar()
+        self.image = pygame.transform.rotate(self.image, 180)
 
         self.velocidade_inimigo = 4
 
@@ -27,10 +27,9 @@ class Inimigo2(Mob):
     def __init__(self, vida, dano):
         Mob.__init__(self, 'recursos/imagens/sprite4.png', (1,1), (183, 234), (0, 0), vida, dano, escala=(60, 60))
 
-        self.rect.centerx = randint(100, 500)
-        self.rect.centery = randint(100, 300)
+        self.randomizar()
+        self.image = pygame.transform.rotate(self.image, 180)
 
-        self.subir = choice([True, False])
         self.velocidade_inimigo = 4
         self.zig_zag = None
 
@@ -47,3 +46,5 @@ class Inimigo2(Mob):
             self.velocidade_x += 2 if zig_zag else -2
         self.velocidade_y += self.velocidade_inimigo
         self.mover()
+    
+grupo_inimigos = []
