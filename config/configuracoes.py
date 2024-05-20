@@ -1,5 +1,5 @@
 import pygame
-import numpy, math
+import numpy, math, time
 import os
 from random import randint, uniform, choice
 
@@ -8,7 +8,10 @@ pygame.init()
 fps = 600
 clock = pygame.time.Clock()
 
-tela = pygame.display.set_mode((600, 700), pygame.RESIZABLE)
+largura = 600
+altura = 700
+
+tela = pygame.display.set_mode((largura, altura), pygame.RESIZABLE)
 
 plano_de_fundo = pygame.image.load("recursos/imagens/space1.png")
 plano_de_fundo2 = pygame.image.load("recursos/imagens/space1.png")

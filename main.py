@@ -1,6 +1,6 @@
 from config.configuracoes import pygame, plano_de_fundo, plano_de_fundo2, tela, fps, clock, uniform
 from recursos import dados
-from src.jogo import inimigos, player, colisoes
+from src.jogo import inimigos, player, colisoes, visualizador
 from src.rede_neural import estrategia_evolutiva
 
 
@@ -43,6 +43,7 @@ def responder_a_eventos():
 estrategia_evolutiva.gerenciador = estrategia_evolutiva.GerenciadorNeural(200, 1, 0.5, player.Player, (2, 1))
 estrategia_evolutiva.gerenciador.nova_partida()
 colisoes.colisao = colisoes.Colisoes()
+visualizador.informacoes = visualizador.Visualizador()
 player.jogador = player.Player(2, 1, real=True)
 
 while True: # loop principal
@@ -59,6 +60,7 @@ while True: # loop principal
     atualizar_objetos()
 
     colisoes.colisao.update()
+    visualizador.informacoes.update()
 
     responder_a_eventos()
 
