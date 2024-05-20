@@ -1,6 +1,5 @@
 from .base import Mob
 from config.configuracoes import randint, pygame
-from pygame import *
 from recursos import dados
 from ..rede_neural.rede_neural import RedeNeural
 
@@ -8,7 +7,7 @@ class Player(Mob):
     def __init__(self, vida, dano, real=False):
         Mob.__init__(self, 'recursos/imagens/sprite1.png', (1, 1), (70, 60), (0, 0), vida, dano)
 
-        self.rede_neural = RedeNeural([2, 6, 6, 2], ['relu', 'relu', 'relu'], 0, 0.05)
+        self.rede_neural = RedeNeural([4, 6, 6, 2], ['relu', 'relu', 'relu'], 0, 0.05)
         self.recompensa = 0
 
         self.rect.centerx = randint(100, 500)
@@ -26,9 +25,30 @@ class Player(Mob):
     def mover_direita(self):
         self.velocidade_x += self.velocidade
         self.image = self.image_dir
+    def animacao_normal(self):
+        self.image = self.sprites[0]
 
     def obter_entradas(self):
-        return [randint(0, 100), randint(0, 100)]
+        entradas = [self.rect.centerx, self.rect.centery]
+
+        if len(dados.sprites_inimigas) > 0:
+
+            inimigo_mais_proximo = None
+            for inimigo in dados.sprites_inimigas: 
+
+                distancia_x = inimigo.rect.center[0] - self.rect.center[0]
+                distancia_y = inimigo.rect.center[1] - self.rect.center[1]
+                distancia_absoluta = (abs(distancia_x) ** 2 + abs(distancia_y) ** 2) ** 0.5
+
+                if inimigo_mais_proximo == None or distancia_absoluta < inimigo_mais_proximo[0]:
+                    inimigo_mais_proximo = [distancia_absoluta, distancia_x, distancia_y]
+            
+            entradas.extend(inimigo_mais_proximo[1:])
+        
+        else:
+            entradas.extend([0, 0])
+               
+        return entradas
 
     def update(self):
 
@@ -41,6 +61,8 @@ class Player(Mob):
                 self.mover_esquerda()
             if output[1]:
                 self.mover_direita()
+            elif output[0] == False and output[1] == False:
+                self.animacao_normal()
         
         self.mover()
             
@@ -78,15 +100,21 @@ class Controle:  # criar classe para resolver coisas sobre controle
     
     def mover(self):
         if jogador != None:
+
+            parado = True
             # para mover player ao pressionar tecla, ou joystick
-            if pygame.key.get_pressed()[K_a] or pygame.key.get_pressed()[K_LEFT] or self.eixo_x <= -0.4:
+            if pygame.key.get_pressed()[pygame.K_a] or pygame.key.get_pressed()[pygame.K_LEFT] or self.eixo_x <= -0.4:
                 jogador.mover_esquerda()
-            if pygame.key.get_pressed()[K_d] or pygame.key.get_pressed()[K_RIGHT] or self.eixo_x >= 0.4:
+                parado = False
+            if pygame.key.get_pressed()[pygame.K_d] or pygame.key.get_pressed()[pygame.K_RIGHT] or self.eixo_x >= 0.4:
                 jogador.mover_direita()
+                parado = False
+            elif parado:
+                jogador.animacao_normal()
             
-            if pygame.key.get_pressed()[K_w] or pygame.key.get_pressed()[K_UP] or self.eixo_y <= -0.4:
+            if pygame.key.get_pressed()[pygame.K_w] or pygame.key.get_pressed()[pygame.K_UP] or self.eixo_y <= -0.4:
                 jogador.rect.y -= jogador.velocidade
-            if pygame.key.get_pressed()[K_s] or pygame.key.get_pressed()[K_DOWN] or self.eixo_y >= 0.4:
+            if pygame.key.get_pressed()[pygame.K_s] or pygame.key.get_pressed()[pygame.K_DOWN] or self.eixo_y >= 0.4:
                 jogador.rect.y += jogador.velocidade
 
 controle = Controle()

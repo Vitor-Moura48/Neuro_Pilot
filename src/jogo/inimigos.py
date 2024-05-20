@@ -22,6 +22,7 @@ class Inimigo1(Mob):
             
         self.velocidade_y += self.velocidade_inimigo
         self.mover()
+        self.debug((000, 000, 255))
 
 class Inimigo2(Mob):
     def __init__(self, vida, dano):
@@ -34,6 +35,7 @@ class Inimigo2(Mob):
         self.zig_zag = None
 
     def update(self):
+        self.debug((255, 000, 000))
 
         self.contar_vulnerabilidade
         if self.conferir_vida():

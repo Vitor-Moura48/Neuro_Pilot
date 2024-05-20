@@ -5,7 +5,7 @@ class Mob(pygame.sprite.Sprite):
     def __init__(self, caminho, linhas_colunas, dimensoes, inflar, vida, dano=0, random_x=500, escala=None):
         pygame.sprite.Sprite.__init__(self)
         dados.sprites.add(self)
-
+    
         self.sprite = pygame.image.load(os.path.join(caminho)).convert_alpha()
 
         self.sprites = [ self.sprite.subsurface((coluna *  dimensoes[0], linha * dimensoes[1]), (dimensoes[0], dimensoes[1])) for linha in range(linhas_colunas[0]) for coluna in range(linhas_colunas[1]) ]
@@ -62,8 +62,8 @@ class Mob(pygame.sprite.Sprite):
         else:
             return False
 
-    def debug(self): # mostrar o retangul ode colisao
-        pygame.draw.rect(tela, (000, 255, 000), self.rect, 2) if self.debug else None
+    def debug(self, cor=(000, 255, 000)): # mostrar o retangul ode colisao
+        pygame.draw.rect(tela, cor, self.rect, 2) if self.debug else None
     
     def renderizar_vida(self):
         # barra de vida

@@ -1,4 +1,4 @@
-from config.configuracoes import pygame, plano_de_fundo, plano_de_fundo2, tela, fps, clock, choice
+from config.configuracoes import pygame, plano_de_fundo, plano_de_fundo2, tela, fps, clock, uniform
 from recursos import dados
 from src.jogo import inimigos, player, colisoes
 from src.rede_neural import estrategia_evolutiva
@@ -8,19 +8,24 @@ def atualizar_objetos():
 
     if dados.mobs_restantes <= 0: # quando esse contador acabar o cenári odeve mudar para o boss
         pass
-
     if len(dados.sprites_inimigas) < 3:
-        mob = choice([inimigos.Inimigo1(2, 1), inimigos.Inimigo2(2, 1)])
-        dados.sprites_inimigas.add(mob)
+        if uniform(0, 1) > 0.5:
+            dados.sprites_inimigas.add(inimigos.Inimigo1(2, 1))
+        else:
+            dados.sprites_inimigas.add(inimigos.Inimigo2(2, 1))  
 
     # adiconar objetos sprites na tela
     dados.sprites.draw(tela)
     dados.sprites.update()
 
 def finalizar_partida():
+
     inimigos.grupo_inimigos = []
     for sprite in dados.sprites:
         sprite.kill()
+    
+    player.jogador = player.Player(2, 1, real=True)
+
     estrategia_evolutiva.gerenciador.nova_partida()
 
 def responder_a_eventos():
@@ -42,7 +47,7 @@ player.jogador = player.Player(2, 1, real=True)
 
 while True: # loop principal
 
-    if len(estrategia_evolutiva.gerenciador.agentes) == 0:
+    if len(estrategia_evolutiva.gerenciador.agentes) == 0 and player.jogador != None:
         finalizar_partida()
 
     dados.cenario = (dados.cenario + 1.5) if dados.cenario < 1000 else 0
@@ -61,4 +66,3 @@ while True: # loop principal
 
     pygame.display.flip()  # atualizar a tela
     clock.tick(fps)
-
