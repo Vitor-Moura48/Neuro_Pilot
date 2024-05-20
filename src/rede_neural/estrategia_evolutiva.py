@@ -43,6 +43,7 @@ class GerenciadorNeural:
     
     # função para criar uma nova geração
     def nova_geracao(self):
+        print('nova geraçao')
 
         # zera algumas variaveis que serão usadas depois
         self.agentes_elite = 0
@@ -131,6 +132,7 @@ class GerenciadorNeural:
         self.melhor_record = self.carregar_arquivos("recursos/saves/melhor_individuo.json", [[0]])[0][0]
     
     def ativar_agentes(self, classe, *arg): # preenche a lista de agentes novos ou reativa os agentes
+     
         self.agentes = [classe(*arg) for _ in range(self.numero_players)] if self.contador_partidas == 1 else copy.deepcopy(self.agentes_inativos)
         self.agentes_inativos = []
     

@@ -1,11 +1,11 @@
 import pygame
-import numpy
+import numpy, math
 import os
 from random import randint, uniform, choice
 
 pygame.init()
 
-fps = 60
+fps = 600
 clock = pygame.time.Clock()
 
 tela = pygame.display.set_mode((600, 700), pygame.RESIZABLE)

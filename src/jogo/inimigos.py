@@ -9,7 +9,7 @@ class Inimigo1(Mob):
         self.randomizar()
         self.image = pygame.transform.rotate(self.image, 180)
 
-        self.velocidade_inimigo = 4
+        self.velocidade = 5
 
     def update(self):
 
@@ -17,10 +17,10 @@ class Inimigo1(Mob):
         if self.conferir_vida():
             self.morrer()
 
-        if mobs_restantes <= 20 and self.velocidade_inimigo != 6:
-            self.velocidade_inimigo = 6
+        if mobs_restantes <= 20 and self.velocidade != 7:
+            self.velocidade = 7
             
-        self.velocidade_y += self.velocidade_inimigo
+        self.velocidade_y += self.velocidade
         self.mover()
         self.debug((000, 000, 255))
 
@@ -31,7 +31,7 @@ class Inimigo2(Mob):
         self.randomizar()
         self.image = pygame.transform.rotate(self.image, 180)
 
-        self.velocidade_inimigo = 4
+        self.velocidade = 4
         self.zig_zag = None
 
     def update(self):
@@ -46,7 +46,7 @@ class Inimigo2(Mob):
                 
         if self.zig_zag != None:
             self.velocidade_x += 2 if zig_zag else -2
-        self.velocidade_y += self.velocidade_inimigo
+        self.velocidade_y += self.velocidade
         self.mover()
     
 grupo_inimigos = []

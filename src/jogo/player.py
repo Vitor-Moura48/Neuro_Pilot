@@ -1,5 +1,5 @@
 from .base import Mob
-from config.configuracoes import randint, pygame
+from config.configuracoes import randint, pygame, math
 from recursos import dados
 from ..rede_neural.rede_neural import RedeNeural
 
@@ -7,7 +7,7 @@ class Player(Mob):
     def __init__(self, vida, dano, real=False):
         Mob.__init__(self, 'recursos/imagens/sprite1.png', (1, 1), (70, 60), (0, 0), vida, dano)
 
-        self.rede_neural = RedeNeural([4, 6, 6, 2], ['relu', 'relu', 'relu'], 0, 0.05)
+        self.rede_neural = RedeNeural([8, 16, 6, 2], ['relu', 'relu', 'relu'], 0, 0.05)
         self.recompensa = 0
 
         self.rect.centerx = randint(100, 500)
@@ -18,6 +18,9 @@ class Player(Mob):
 
         self.velocidade = 4
         self.real = real
+    
+    def copia(self):
+        return Player(self.vida, self.dano, self.real)
     
     def mover_esquerda(self):
         self.velocidade_x -= self.velocidade
@@ -33,20 +36,27 @@ class Player(Mob):
 
         if len(dados.sprites_inimigas) > 0:
 
-            inimigo_mais_proximo = None
+            inimigos = []
             for inimigo in dados.sprites_inimigas: 
 
                 distancia_x = inimigo.rect.center[0] - self.rect.center[0]
                 distancia_y = inimigo.rect.center[1] - self.rect.center[1]
-                distancia_absoluta = (abs(distancia_x) ** 2 + abs(distancia_y) ** 2) ** 0.5
+                distancia = math.hypot(distancia_x, distancia_y)
 
-                if inimigo_mais_proximo == None or distancia_absoluta < inimigo_mais_proximo[0]:
-                    inimigo_mais_proximo = [distancia_absoluta, distancia_x, distancia_y]
-            
-            entradas.extend(inimigo_mais_proximo[1:])
+                inimigos.append([distancia, distancia_x, distancia_y, inimigo.velocidade])
+
+            inimigos.sort(key=lambda x: x[3])
+
+            while len(inimigos) > 2:
+                inimigos.pop(-1)
         
-        else:
-            entradas.extend([0, 0])
+            for inimigo in range(len(inimigos)):  
+                inimigos[inimigo].pop(0)
+            
+            for inimigo in inimigos:
+                entradas.extend(inimigo)
+        
+        entradas.extend([0] * (8 - len(entradas))) # preenche com 0 oq faltar
                
         return entradas
 

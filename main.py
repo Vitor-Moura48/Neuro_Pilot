@@ -47,7 +47,7 @@ player.jogador = player.Player(2, 1, real=True)
 
 while True: # loop principal
 
-    if len(estrategia_evolutiva.gerenciador.agentes) == 0 and player.jogador != None:
+    if len(estrategia_evolutiva.gerenciador.agentes) == 0 and player.jogador == None:
         finalizar_partida()
 
     dados.cenario = (dados.cenario + 1.5) if dados.cenario < 1000 else 0

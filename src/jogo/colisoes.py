@@ -28,5 +28,6 @@ class Colisoes:
         try: 
             if pygame.sprite.spritecollideany(player.jogador, dados.sprites_inimigas):
                 player.jogador.kill()
+                player.jogador = None
         except: pass
 
