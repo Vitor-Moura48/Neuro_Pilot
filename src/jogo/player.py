@@ -7,7 +7,7 @@ class Player(Mob):
     def __init__(self, vida, dano, real=False):
         Mob.__init__(self, 'recursos/imagens/sprite1.png', (1, 1), (70, 60), (0, 0), vida, dano)
 
-        self.rede_neural = RedeNeural([14, 16, 8, 4], ['relu', 'relu', 'relu'], 0, 0.05)
+        self.rede_neural = RedeNeural([14, 16, 8, 4], ['sigmoid', 'sigmoid', 'sigmoid'], 0, 0.05)
 
         self.rect.centerx = randint(100, 500)
         self.rect.centery = randint(500, 600)

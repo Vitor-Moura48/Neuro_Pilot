@@ -1,6 +1,5 @@
 from config.configuracoes import time, pygame, tela, largura, altura
 from ..rede_neural import estrategia_evolutiva
-from .projeteis import Projetil
 
 class Visualizador:
     def __init__(self):
@@ -8,7 +7,31 @@ class Visualizador:
         self.tempo_inicial = 0
         self.fonte = pygame.font.Font(None, 32)
 
+        self.config_camadas = [14, 16, 8, 4]
+        self.espacamentox = 400 / (len(self.config_camadas) + 1)
+        self.rects = []
+
+        x = self.espacamentox
+        for camada in self.config_camadas:
+            self.espacamentoy = 200 / (camada + 1)
+            y = self.espacamentoy
+            for neuronio in range(camada):
+                self.rects.append([(x, y), 5])
+                y += self.espacamentoy
+            x += self.espacamentox
+    
+    def visualizar_rede(self):
+        if len(estrategia_evolutiva.gerenciador.agentes) > 0:
+            pygame.draw.rect(tela, (20, 20, 20), (0, 0, 400, 200))
+
+            cor = (150, 000, 000)
+            for i in range(len(self.rects)):
+                pygame.draw.circle(tela, cor, self.rects[i][0], self.rects[i][1])
+
+
     def update(self):
+
+        self.visualizar_rede()
 
         self.contador_frames += 1
         tempo_atual = time.time()
