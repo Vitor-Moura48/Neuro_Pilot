@@ -7,8 +7,7 @@ class Player(Mob):
     def __init__(self, vida, dano, real=False):
         Mob.__init__(self, 'recursos/imagens/sprite1.png', (1, 1), (70, 60), (0, 0), vida, dano)
 
-        self.rede_neural = RedeNeural([8, 16, 6, 2], ['relu', 'relu', 'relu'], 0, 0.05)
-        self.recompensa = 0
+        self.rede_neural = RedeNeural([14, 16, 8, 4], ['relu', 'relu', 'relu'], 0, 0.05)
 
         self.rect.centerx = randint(100, 500)
         self.rect.centery = randint(500, 600)
@@ -19,9 +18,6 @@ class Player(Mob):
         self.velocidade = 4
         self.real = real
     
-    def copia(self):
-        return Player(self.vida, self.dano, self.real)
-    
     def mover_esquerda(self):
         self.velocidade_x -= self.velocidade
         self.image = self.image_esq
@@ -30,6 +26,10 @@ class Player(Mob):
         self.image = self.image_dir
     def animacao_normal(self):
         self.image = self.sprites[0]
+    def mover_frente(self):
+        self.velocidade_y -= self.velocidade
+    def mover_tras(self):
+        self.velocidade_y += self.velocidade
 
     def obter_entradas(self):
         entradas = [self.rect.centerx, self.rect.centery]
@@ -47,7 +47,7 @@ class Player(Mob):
 
             inimigos.sort(key=lambda x: x[3])
 
-            while len(inimigos) > 2:
+            while len(inimigos) > 4:
                 inimigos.pop(-1)
         
             for inimigo in range(len(inimigos)):  
@@ -56,14 +56,14 @@ class Player(Mob):
             for inimigo in inimigos:
                 entradas.extend(inimigo)
         
-        entradas.extend([0] * (8 - len(entradas))) # preenche com 0 oq faltar
+        entradas.extend([0] * (14 - len(entradas))) # preenche com 0 oq faltar
                
         return entradas
 
     def update(self):
 
         if not self.real:
-            self.recompensa += 1
+            self.rede_neural.recompensa += 1
             self.rede_neural.definir_entrada(self.obter_entradas())
             output = self.rede_neural.obter_saida()
 
@@ -73,6 +73,11 @@ class Player(Mob):
                 self.mover_direita()
             elif output[0] == False and output[1] == False:
                 self.animacao_normal()
+            
+            if output[2]:
+                self.mover_frente()
+            if output[3]:
+                self.mover_tras()
         
         self.mover()
             
@@ -123,9 +128,9 @@ class Controle:  # criar classe para resolver coisas sobre controle
                 jogador.animacao_normal()
             
             if pygame.key.get_pressed()[pygame.K_w] or pygame.key.get_pressed()[pygame.K_UP] or self.eixo_y <= -0.4:
-                jogador.rect.y -= jogador.velocidade
+                jogador.mover_frente()
             if pygame.key.get_pressed()[pygame.K_s] or pygame.key.get_pressed()[pygame.K_DOWN] or self.eixo_y >= 0.4:
-                jogador.rect.y += jogador.velocidade
+                jogador.mover_tras()
 
 controle = Controle()
 jogador = None

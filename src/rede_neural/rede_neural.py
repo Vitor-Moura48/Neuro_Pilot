@@ -11,6 +11,8 @@ class RedeNeural:
         self.bias = bias
         self.taxa_de_mutacao = taxa_mutacao
         self.camadas = [] # variavel onde vão ser colocados os pesos 
+        self.recompensa = 0
+
         
         # cria a estrutura de camadas com base nas configurações definidas
         for camada in range(1, len(self.configuracao_camadas)):  # 1 porque a primeira camada é  de entrada inicial
@@ -59,6 +61,8 @@ class RedeNeural:
                   
                     elif camada > camada_insercao_escolhida or (camada == camada_insercao_escolhida and neuronio >= neuronio_insercao_escolhido):
                         self.camadas[camada][neuronio] = estrategia_evolutiva.gerenciador.total_redes[roleta_2][camada + 1][neuronio]
+        
+        self.mutacao()
        
     # função utilizada para simular a mutação
     def mutacao(self):
