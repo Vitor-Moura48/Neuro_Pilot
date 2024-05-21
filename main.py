@@ -8,7 +8,7 @@ def atualizar_objetos():
 
     if dados.mobs_restantes <= 0: # quando esse contador acabar o cenári odeve mudar para o boss
         pass
-    if len(dados.sprites_inimigas) < 3:
+    if len(dados.sprites_inimigas) < 5:
         if uniform(0, 1) > 0.5:
             dados.sprites_inimigas.add(inimigos.Inimigo1(2, 1))
         else:
@@ -40,7 +40,7 @@ def responder_a_eventos():
             for agente in dados.sprites_agentes:
                     agente.disparar()
 
-estrategia_evolutiva.gerenciador = estrategia_evolutiva.GerenciadorNeural(200, 1, 0.5, player.Player, (2, 1))
+estrategia_evolutiva.gerenciador = estrategia_evolutiva.GerenciadorNeural(400, 5, 0.5, player.Player, (2, 1))
 estrategia_evolutiva.gerenciador.nova_partida()
 colisoes.colisao = colisoes.Colisoes()
 visualizador.informacoes = visualizador.Visualizador()

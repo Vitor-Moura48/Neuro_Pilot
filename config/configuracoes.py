@@ -5,7 +5,7 @@ from random import randint, uniform, choice
 
 pygame.init()
 
-fps = 600
+fps = 60
 clock = pygame.time.Clock()
 
 largura = 600
