@@ -1,6 +1,8 @@
 # Neuro Pilot - Rede Neural
 Este é um projeto que utiliza redes neurais para controlar um agente virtual em um jogo de naves. A rede neural é treinada para permitir que o agente evite e destrua obstáculos que surgem no caminho.
 
+![Texto Alternativo](recursos/imagens/img2.png)
+
 ## Descrição do Projeto
 O objetivo deste projeto é explorar o uso de redes neurais para criar um agente inteligente capaz de jogar o Jogo "Neuro Pilot" de forma autônoma. Utilizando a biblioteca Pytorch, numpy, e outras. Desenvolvemos um jogo em que o agente deve se movimentar e disparar projéteis para evitar e destruir os obstáculos que aparecem em sua frente.
 
