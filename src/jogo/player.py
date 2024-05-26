@@ -7,7 +7,7 @@ class Player(Mob):
     def __init__(self, vida, dano, real=False):
         Mob.__init__(self, 'recursos/imagens/sprite1.png', (1, 1), (70, 60), (0, 0), vida, dano)
 
-        self.rede_neural = RedeNeural([14, 16, 8, 4], ['sigmoid', 'sigmoid', 'sigmoid'], 0, 0.05)
+        self.rede_neural = RedeNeural([14, 28, 28, 2], ['sigmoid', 'sigmoid', 'sigmoid'], 0, 0.05)
 
         self.rect.centerx = randint(100, 500)
         self.rect.centery = randint(500, 600)
@@ -74,10 +74,10 @@ class Player(Mob):
             elif output[0] == False and output[1] == False:
                 self.animacao_normal()
             
-            if output[2]:
-                self.mover_frente()
-            if output[3]:
-                self.mover_tras()
+            #if output[2]:
+             #   self.mover_frente()
+            #if output[3]:
+              #  self.mover_tras()
         
         self.mover()
             
